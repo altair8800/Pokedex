@@ -17,7 +17,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.paging.LoadState
+import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
+import com.barco.pokedex.model.PokemonOverview
 import okhttp3.HttpUrl.Companion.toHttpUrl
 
 @Composable
@@ -45,38 +47,42 @@ fun PokemonListScreen(
                 )
             }
         }
-        pokemons.apply {
-            when {
-                loadState.refresh is LoadState.Loading -> {
-                    item {
-                        Box(
-                            modifier = Modifier.fillParentMaxSize(),
-                            contentAlignment = Alignment.Center
-                        ) {
-                            CircularProgressIndicator()
-                        }
+        displayOtherPagingStates(pokemons)
+    }
+}
+
+private fun LazyListScope.displayOtherPagingStates(pokemons: LazyPagingItems<PokemonOverview>) {
+    pokemons.apply {
+        when {
+            loadState.refresh is LoadState.Loading -> {
+                item {
+                    Box(
+                        modifier = Modifier.fillParentMaxSize(),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        CircularProgressIndicator()
                     }
                 }
+            }
 
-                loadState.refresh is LoadState.Error -> {
-                    val error = pokemons.loadState.refresh as LoadState.Error
-                    pagingError(error)
-                }
+            loadState.refresh is LoadState.Error -> {
+                val error = pokemons.loadState.refresh as LoadState.Error
+                displayPagingError(error)
+            }
 
-                loadState.append is LoadState.Loading -> {
-                    item { CircularProgressIndicator() }
-                }
+            loadState.append is LoadState.Loading -> {
+                item { CircularProgressIndicator() }
+            }
 
-                loadState.append is LoadState.Error -> {
-                    val error = pokemons.loadState.append as LoadState.Error
-                    pagingError(error)
-                }
+            loadState.append is LoadState.Error -> {
+                val error = pokemons.loadState.append as LoadState.Error
+                displayPagingError(error)
             }
         }
     }
 }
 
-private fun LazyListScope.pagingError(error: LoadState.Error) {
+private fun LazyListScope.displayPagingError(error: LoadState.Error) {
     item {
         Text(
             modifier = Modifier.fillParentMaxSize(),
