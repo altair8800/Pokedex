@@ -58,7 +58,7 @@ private fun HeadingSection(
     ) {
         GlideImage(
             modifier = Modifier.fillMaxWidth(),
-            model = pokemonDetails.sprites.front_default,
+            model = pokemonDetails.sprites.frontDefault,
             contentScale = ContentScale.Crop,
             contentDescription = ""
         )

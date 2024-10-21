@@ -1,5 +1,7 @@
 package com.barco.pokedex.model
 
+import com.squareup.moshi.Json
+
 data class PokemonDetails(
     val name: String,
     val height: Int,
@@ -7,5 +9,5 @@ data class PokemonDetails(
 )
 
 data class Sprites(
-    val front_default: String
+    @Json(name = "front_default") val frontDefault: String
 )
