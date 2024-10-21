@@ -53,7 +53,7 @@ class MainActivity : ComponentActivity() {
                         )
                     }
                 ) { paddingValues ->
-                    NavHost(
+                    NavHost( //TODO: Choose a better animation transition OR just use a Dialog for a quick view of the pokemon
                         navController = navController,
                         startDestination = "list",
                         modifier = Modifier.padding(paddingValues),

@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -59,12 +60,7 @@ fun PokemonListScreen(
 
                 loadState.refresh is LoadState.Error -> {
                     val error = pokemons.loadState.refresh as LoadState.Error
-                    item {
-                        Text(
-                            modifier = Modifier.fillParentMaxSize(),
-                            text = error.error.localizedMessage!!
-                        )
-                    }
+                    pagingError(error)
                 }
 
                 loadState.append is LoadState.Loading -> {
@@ -73,14 +69,18 @@ fun PokemonListScreen(
 
                 loadState.append is LoadState.Error -> {
                     val error = pokemons.loadState.append as LoadState.Error
-                    item {
-                        Text(
-                            modifier = Modifier.fillParentMaxSize(),
-                            text = error.error.localizedMessage!!
-                        )
-                    }
+                    pagingError(error)
                 }
             }
         }
+    }
+}
+
+private fun LazyListScope.pagingError(error: LoadState.Error) {
+    item {
+        Text(
+            modifier = Modifier.fillParentMaxSize(),
+            text = error.error.localizedMessage!!
+        )
     }
 }
