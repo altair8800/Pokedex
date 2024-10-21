@@ -8,6 +8,6 @@ data class PokemonDetails(
     val sprites: Sprites
 )
 
-data class Sprites(
+data class Sprites( //TODO: Use Kotlin Serialization
     @Json(name = "front_default") val frontDefault: String
 )

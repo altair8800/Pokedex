@@ -9,7 +9,7 @@ import java.io.IOException
 
 class PokemonListDataSource(
     private val service: PokeService,
-) : PagingSource<Int, PokemonOverview>() {
+) : PagingSource<Int, PokemonOverview>() { //TODO: Encapsulate and test the paging index logic
 
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, PokemonOverview> {
         return try {
